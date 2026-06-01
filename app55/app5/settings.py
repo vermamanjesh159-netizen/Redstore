@@ -31,7 +31,11 @@ SECRET_KEY = 'django-insecure-6%3+vuwer*!d8-6z2&e9%))lg2e4go5n!0utn@*=p5_vpvj%it
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'redstore-django.onrender.com', '.onrender.com']
+
+allowed_hosts_env = os.getenv("ALLOWED_HOSTS")
+if allowed_hosts_env:
+    ALLOWED_HOSTS.extend([host.strip() for host in allowed_hosts_env.split(",")])
 
 
 # Application definition
