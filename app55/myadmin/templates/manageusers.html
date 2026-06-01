@@ -1,56 +1,75 @@
 {% extends 'adminhome.html' %}
 {% load static %}
 
-<!------------navbar----------------------->
-
-
 {% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="m-0 fw-bold"><i class="fa-solid fa-users text-danger me-2"></i> Manage Users</h2>
+</div>
 
-<head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'css/style.css'%}">
-</head>
-
-<center>
-<h1>View & Manage User Details </h1>
-
-<table class="table table-bordered" style="margin-top:60;">
-    <tr>
-        <th>RegId</th>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Mobile</th>
-        <th>Address</th>
-        <th>City</th>
-        <th>Gender</th>
-        <th>Info</th>
-        <th>Status</th>
-        <th>Action</th>
-        <th>Delete</th>
-    </tr>
-{% for row in uDetails %}
-<tr>
-    <td>{{row.regid}}</td>
-    <td>{{row.name}}</td>
-    <td>{{row.email}}</td>
-    <td>{{row.mobile}}</td>
-    <td>{{row.addrss}}</td>
-    <td>{{row.city}}</td>
-    <td>{{row.gender}}</td>
-    <td>{{row.info}}</td>
-    <td>{{row.status}}</td>
-    <td>
-        {% if row.status %}
-        <a href="/myadmin/manageuserstatus/?regid={{row.regid}}&s=block" style="color: orange;">Block</a>
-        {% else %}
-        <a href="/myadmin/manageuserstatus/?regid={{row.regid}}&s=verify"  style="color: green;">Verify</a>
-        {% endif %}
-    </td>
-    <td>
-        <a href="/myadmin/manageuserstatus/?regid={{row.regid}}&s=delete" style="color:red;">Delete</a>
-    </td>
-</tr>
-{% endfor %} 
-</table>   
-</center>
+<div class="table-responsive-premium">
+    <table class="table-premium">
+        <thead>
+            <tr>
+                <th>RegId</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Mobile</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>Gender</th>
+                <th>Info / Registered On</th>
+                <th>Status</th>
+                <th class="text-center">Action</th>
+                <th class="text-center">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in uDetails %}
+            <tr>
+                <td><strong>#{{row.regid}}</strong></td>
+                <td>{{row.name}}</td>
+                <td>{{row.email}}</td>
+                <td>{{row.mobile}}</td>
+                <td>{{row.address}}</td>
+                <td>{{row.city}}</td>
+                <td>
+                    {% if row.gender == 'Male' or row.gender == 'male' %}
+                    <span class="badge bg-light text-primary"><i class="fa-solid fa-mars"></i> Male</span>
+                    {% else %}
+                    <span class="badge bg-light text-danger"><i class="fa-solid fa-venus"></i> Female</span>
+                    {% endif %}
+                </td>
+                <td><small class="text-muted">{{row.info}}</small></td>
+                <td>
+                    {% if row.status %}
+                    <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1">Active</span>
+                    {% else %}
+                    <span class="badge bg-warning-subtle text-warning border border-warning-subtle px-2 py-1">Pending</span>
+                    {% endif %}
+                </td>
+                <td class="text-center">
+                    {% if row.status %}
+                    <a href="/myadmin/manageuserstatus/?regid={{row.regid}}&s=block" class="btn btn-sm btn-outline-warning">
+                        <i class="fa-solid fa-ban"></i> Block
+                    </a>
+                    {% else %}
+                    <a href="/myadmin/manageuserstatus/?regid={{row.regid}}&s=verify" class="btn btn-sm btn-outline-success">
+                        <i class="fa-solid fa-check"></i> Verify
+                    </a>
+                    {% endif %}
+                </td>
+                <td class="text-center">
+                    <a href="/myadmin/manageuserstatus/?regid={{row.regid}}&s=delete" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to delete this user?');">
+                        <i class="fa-solid fa-trash-can"></i> Delete
+                    </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="11" class="text-center py-4 text-muted">No users found in database.</td>
+            </tr>
+            {% endfor %} 
+        </tbody>
+    </table>   
+</div>
 {% endblock %}

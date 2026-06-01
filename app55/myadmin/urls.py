@@ -6,8 +6,6 @@ urlpatterns = [
     path('manageusers/',views.manageusers),
     path('manageuserstatus/',views.manageuserstatus),
     path('products/',views.products),
-    path('addcategory/',views.addcategory),
-    path('addsubcategory/',views.addsubcategory),
     path('viewuserfunds/',views.viewuserfunds),
     path('epadmin/',views.epadmin)
 ]

@@ -1,187 +1,240 @@
 {% load static %}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initail-scale=1.0">
-    <title>RedStore</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'css/style.css'%}">
-<title>RedStore</title>
-<link rel="icon" href="/static/images/favi.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RedStore | Premium E-Commerce</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Style Sheet -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="icon" href="{% static 'images/favi.png' %}">
 </head>
 <body>
-    <!--------------------header start--------------------------------------->
-    {% block header %}
-    {% endblock %}
-    {% block trackingid %}
-    <div class="container"
-        style="margin:0 15px 0 15 px; justify-content:right; font-size:20px; background-color:rgb(9, 9, 10);">
-        <div style="color: aliceblue;">
-            <img src="/static/images/mail.png" width="20px" style="padding:0 5px 0 0;" />
-            <span>example123@gmail.com</span>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="top-bar-left">
+            <div class="top-bar-item">
+                <i class="fa-solid fa-phone"></i>
+                <span>+91 250 196 89</span>
+            </div>
+            <div class="top-bar-item d-none d-sm-flex">
+                <i class="fa-solid fa-envelope"></i>
+                <span>support@redstore.com</span>
+            </div>
+        </div>
+        <div class="top-bar-right">
+            {% block trackingid %}
+            {% if request.session.sunm %}
+            <div class="top-bar-item">
+                <i class="fa-solid fa-circle-user text-danger"></i>
+                <span>Hello, <strong>{{request.session.sunm}}</strong></span>
+            </div>
+            {% else %}
+            <div class="top-bar-item">
+                <i class="fa-solid fa-circle-user"></i>
+                <span>Guest</span>
+            </div>
+            {% endif %}
+            {% endblock %}
         </div>
     </div>
-    {% endblock %}
 
-    <div class="header">
-        {% block logo %}
-        <div class="container">
-            <div class="navbar">
-                <div class="logo">
-                    <img src="/static/images/logo.png" style="background-color: antiquewhite;" width="125px">
+    <!-- Header Navigation -->
+    <header class="header-nav">
+        <div class="navbar-container">
+            <!-- Logo Block -->
+            {% block logo %}
+            <a href="/" class="logo-text">
+                <i class="fa-solid fa-bag-shopping text-danger"></i> Red<span>Store</span>
+            </a>
+            {% endblock %}
+
+            <!-- Navigation Links -->
+            {% block nav %}
+            <ul class="nav-menu" id="MenuItems">
+                <li><a class="nav-link" href="/">Home</a></li>
+                <li><a class="nav-link" href="/about/">About</a></li>
+                <li><a class="nav-link" href="/contact/">Contact</a></li>
+                {% if request.session.sunm %}
+                    {% if request.session.sroll == "admin" %}
+                        <li><a class="nav-link" href="/myadmin/"><i class="fa-solid fa-user-shield text-danger me-1"></i> Admin Panel</a></li>
+                    {% else %}
+                        <li><a class="nav-link" href="/user/"><i class="fa-solid fa-house-user text-danger me-1"></i> User Panel</a></li>
+                    {% endif %}
+                    <li><a class="nav-link text-danger fw-bold" href="/login/"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+                {% else %}
+                    <li><a class="nav-link" href="/register/">Register</a></li>
+                    <li><a class="nav-link" href="/login/">Login</a></li>
+                {% endif %}
+            </ul>
+            {% endblock %}
+            
+            <i class="fa-solid fa-bars menu-icon" onclick="menutoggle()"></i>
+        </div>
+    </header>
+
+    <!-- Main Responsive Layout Wrapper -->
+    <div class="app-layout">
+        <!-- Sidebar placeholder (Admin & User Panel menus) -->
+        {% block sidebar %}
+        {% endblock %}
+
+        <div class="main-wrapper">
+            <!-- Hero / Quote block (typically Homepage only) -->
+            {% block Quote %}
+            <section class="hero">
+                <div class="container">
+                    <div class="hero-row">
+                        <div class="hero-content">
+                            <h1>Give Your Workout<br>A New Style</h1>
+                            <p>Success isn't always about greatness. It's about consistency. Consistent hard work gains success. Greatness will come.</p>
+                            <a href="/login/" class="btn-premium">Explore Now <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                        <div class="hero-image">
+                            <img src="/static/images/image1.png" alt="Workout Style">
+                        </div>
+                    </div>
                 </div>
-                {% endblock %}
-                {% block nav %}
+            </section>
+            {% endblock %}
 
-                
-                
-                <nav>
-                    <ul id="MenuItems">
-                        <li><b><a class="active" href="/">HOME</a></b></li>
-                        <li><b><a class="active" href="/about/">ABOUT</a></b></li>
-                        <li><b><a class="active" href="/contact/">CONTACT</a></b></li>
-                        <li><b><a class="active" href="/register/">REGISTER</a></b></li>
-                        <li><b><a class="active" href="/login/">LOGIN</a></b></li>
+            <!-- Featured Categories Block (Homepage only) -->
+            {% block featured %}
+            <section class="category-section">
+                <div class="container">
+                    <h2 class="title">Featured Categories</h2>
+                    <div class="category-grid">
+                        <div class="premium-card">
+                            <img src="/static/images/category-1.jpg" class="premium-card-img" alt="Category 1">
+                        </div>
+                        <div class="premium-card">
+                            <img src="/static/images/category-2.jpg" class="premium-card-img" alt="Category 2">
+                        </div>
+                        <div class="premium-card">
+                            <img src="/static/images/category-3.jpg" class="premium-card-img" alt="Category 3">
+                        </div>
+                    </div>
+                </div>
+            </section>
+            {% endblock %}
 
-                    </ul>
-                </nav>
-                <div>
-                    <img src="/static/images/menu.png" style="background-color:white;" width="20px"
-                        onclick="menutoggle()" class="menu-icon">
+            <!-- Offer Block (Homepage only) -->
+            {% block offer %}
+            {% endblock %}
 
-
+            <!-- Page Main Content Block -->
+            {% block contentlayout %}
+            <div class="main-content">
+                <div class="container-fluid">
+                    {% block content %}
                     {% endblock %}
                 </div>
             </div>
-        </div>
-
-
-
-        <!-----------Quote block---------------------------------->
-        {% block Quote %}
-        <div class="row" style="padding-left:50px;">
-            <div class="col-2">
-                <h1>Give Your Workout<br>A New Style</h1><br>
-                <p><b>Success isn't always about greatness. It's about consistency.
-                        Consistent<br>hard work gains success. Greatness will come.</b></p>
-                <a href="" class="btn">Explore Now &#8594;</a>
-            </div>
-            <div class="col-2">
-                <img src="/static/images/image1.png">
-            </div>
-        </div>
-        {% endblock %}
-        <!--------------------header end------------------->
-
-
-
-
-        <!---------------------------------------featured categories---------------------------->
-        {% block featured %}
-        <div class="categories">
-            <div class="small-container">
-                <div class="row">
-                    <div class="col-3">
-                        <img src="/static/images/category-1.jpg">
-                    </div>
-                    <div class="col-3">
-                        <img src="/static/images/category-2.jpg">
-                    </div>
-                    <div class="col-3">
-                        <img src="/static/images/category-3.jpg">
-                    </div>
-                </div>
-            </div>
-        </div>
-        {% endblock %}
-        <!------------------------------ offer --------------------------------->
-
-        {% block offer %}
-        <div class="offer">
-            <div class="small-container">
-                <div class="row">
-                    <div class="col-2">
-                        <img src="/static/images/logo1.jpg" class="offer-img">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        {% endblock %}
-        {% block contentlayout %}
-        <div class="col-md-12">
-            {% block content %}
-
             {% endblock %}
-            <br>
-        </div>
-        {% endblock %}
-        <!-------------------------------------- footer start ---------------------------------------------->
-        {% block footer %}
-        
-        <div class="footer">
-            <div>
-                <div class="row">
-                    <div class="footer-col-1">
+            
+            <!-- Footer Block -->
+            {% block footer %}
+            <footer class="footer">
+                <div class="footer-container">
+                    <div class="footer-column">
                         <h3>Download App</h3>
-                        <p>Download App for Android and ios mobile phone.</p>
-                        <div class="app-logo">
-                            <img src="/static/images/play-store.png">
-                            <img src="/static/images/app-store.png">
+                        <p>Download App for Android and iOS mobile devices.</p>
+                        <div class="app-store-badges">
+                            <img src="/static/images/play-store.png" alt="Google Play Store">
+                            <img src="/static/images/app-store.png" alt="Apple App Store">
                         </div>
                     </div>
-                    <div class="footer-col-2">
-                        <img src="/static/images/logo-white.png">
-                        <p>Our Purpose Is To Sustainbly Make the Pleasure and Benefits of Sports Accessible to the Many.
-                        </p>
+                    <div class="footer-column">
+                        <div class="logo-text text-white mb-3">
+                            <i class="fa-solid fa-bag-shopping text-danger"></i> Red<span>Store</span>
+                        </div>
+                        <p>Our purpose is to sustainably make the pleasure and benefits of sports accessible to the many.</p>
                     </div>
-                    <div class="footer-col-3">
+                    <div class="footer-column">
                         <h3>Useful Links</h3>
-                        <ul>
-                            <li>Coupons</li>
-                            <li>Blog</li>
-                            <li>Return Policy</li>
-                            <li>Join Affiliate</li>
+                        <ul class="footer-links">
+                            <li><a href="#">Coupons</a></li>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Return Policy</a></li>
+                            <li><a href="#">Join Affiliate</a></li>
                         </ul>
                     </div>
-                    <div class="footer-col-4">
-                        <h3>Follow us</h3>
-                        <ul>
-                            <li>Facebook</li>
-                            <li>Twitter</li>
-                            <li>Instagram</li>
-                            <li>Youtube</li>
+                    <div class="footer-column">
+                        <h3>Follow Us</h3>
+                        <ul class="footer-links">
+                            <li><a href="#"><i class="fa-brands fa-facebook"></i> Facebook</a></li>
+                            <li><a href="#"><i class="fa-brands fa-twitter"></i> Twitter</a></li>
+                            <li><a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a></li>
+                            <li><a href="#"><i class="fa-brands fa-youtube"></i> Youtube</a></li>
                         </ul>
                     </div>
                 </div>
-                <hr>
-            </br>
-            <div>
-                <p class="copyright">&#169;2022-2023 All Rights Reserved By - RedStore -</p>
-            </div>
-            </div>
+                <div class="footer-bottom">
+                    <p class="copyright">&copy; 2026 RedStore. All Rights Reserved.</p>
+                </div>
+            </footer>
+            {% endblock %}
         </div>
-       </div>
-        {% endblock %}
-        <!--------------------footer end-------------------------------------->
+    </div>
 
+    <!-- Bootstrap 5 Bundle JS with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-        <!------------------------js for toggle menu------------------------>
-
-        <script>
-            var MenuItems = document.getElementById("MenuItems");
-
-            MenuItems.style.maxHeight = "0px";
-            function menutoggle() {
-                if (MenuItems.style.maxHeight == "0px") {
-                    MenuItems.style.maxHeight = "200px"
-                }
-                else {
-                    MenuItems.style.maxHeight = "0px"
-                }
+    <!-- Mobile Menu Toggle Script -->
+    <script>
+        function menutoggle() {
+            var menu = document.getElementById("MenuItems");
+            if (menu.style.display === "flex" || window.getComputedStyle(menu).display === "flex") {
+                menu.style.display = "none";
+            } else {
+                menu.style.display = "flex";
+                menu.style.flexDirection = "column";
+                menu.style.position = "absolute";
+                menu.style.top = "70px";
+                menu.style.left = "0";
+                menu.style.width = "100%";
+                menu.style.backgroundColor = "white";
+                menu.style.boxShadow = "0 10px 15px rgba(0,0,0,0.05)";
+                menu.style.padding = "20px";
+                menu.style.gap = "15px";
+                menu.style.zIndex = "1000";
             }
-        </script>
-</body>
+        }
 
+        // Active link highlighter
+        document.addEventListener("DOMContentLoaded", function() {
+            var currentPath = window.location.pathname;
+            
+            // Highlight header nav links
+            var navLinks = document.querySelectorAll(".nav-link");
+            navLinks.forEach(function(link) {
+                var href = link.getAttribute("href");
+                if (href === currentPath || (href !== "/" && currentPath.startsWith(href))) {
+                    link.classList.add("active");
+                } else {
+                    link.classList.remove("active");
+                }
+            });
+
+            // Highlight sidebar nav links
+            var sidebarItems = document.querySelectorAll(".sidebar-item");
+            sidebarItems.forEach(function(item) {
+                var link = item.querySelector("a");
+                if (link) {
+                    var href = link.getAttribute("href");
+                    if (href === currentPath || (href !== "/myadmin/" && href !== "/user/" && currentPath.startsWith(href))) {
+                        item.classList.add("active");
+                    } else {
+                        item.classList.remove("active");
+                    }
+                }
+            });
+        });
+    </script>
+</body>
 </html>

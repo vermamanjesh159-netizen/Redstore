@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: redstore-django
+    env: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn app5.wsgi:application"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.12
+      - key: DEBUG
+        value: "False"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: redstore-db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: STRIPE_SECRET_KEY
+        sync: false
+databases:
+  - name: redstore-db
+    plan: free

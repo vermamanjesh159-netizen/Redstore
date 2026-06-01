@@ -1,92 +1,45 @@
 {% extends 'master_template.html' %}
 
-<!------------navbar----------------------->
+{% block trackingid %}
+<div class="top-bar-item">
+    <i class="fa-solid fa-user-shield text-danger"></i>
+    <span>Admin: <strong>{{sunm}}</strong></span>
+</div>
+{% endblock %}
 
+{% block nav %}
+<ul class="nav-menu" id="MenuItems">
+    <li><a class="nav-link active" href="/myadmin/">Admin Panel</a></li>
+    <li><a class="nav-link" href="/">View Site</a></li>
+    <li><a class="nav-link text-danger fw-bold" href="/login/"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+</ul>
+{% endblock %}
+
+{% block sidebar %}
+<aside class="sidebar">
+    <div class="sidebar-header">
+        <span class="sidebar-title">Admin Controls</span>
+    </div>
+    <ul class="sidebar-menu">
+        <li class="sidebar-item"><a href="/myadmin/"><i class="fa-solid fa-gauge"></i> Dashboard</a></li>
+        <li class="sidebar-item"><a href="/myadmin/manageusers/"><i class="fa-solid fa-users"></i> Manage Users</a></li>
+        <li class="sidebar-item"><a href="/myadmin/products/"><i class="fa-solid fa-tags"></i> Add Product</a></li>
+        <li class="sidebar-item"><a href="/myadmin/viewuserfunds/"><i class="fa-solid fa-wallet"></i> View Funds</a></li>
+        <li class="sidebar-item"><a href="/myadmin/epadmin/"><i class="fa-solid fa-user-gear"></i> Edit Profile</a></li>
+    </ul>
+</aside>
+{% endblock %}
 
 {% block content %}
-<br>
-<br>
-<center>
-<h3>Welcom to Admin Panel</h3>
-</center>
-{% endblock %}
-{% block logo %}
-        <div class="container">
-            <div class="navbar">
-                <div class="logo">
-                    <img src="/static/images/logo.png" style="background-color: antiquewhite;" width="100px">
-                </div>
-{% endblock %}
-
-{% block trackingid %}
-
-<div class="container" style="margin:0 15px 0 15 px; justify-content:right; font-size:20px; background-color: black;">
-    <div style="color: aliceblue;">
-        <img src="/static/images/mail.png" width="20px" style="padding:0 5px 0 0;"/>
-        <span>{{sunm}}</span>
+<div class="card border-0 shadow-premium rounded-4 p-5 text-center bg-white">
+    <div class="py-5">
+        <div class="display-1 text-danger mb-4"><i class="fa-solid fa-user-shield"></i></div>
+        <h2 class="fw-bold mb-3">Welcome to the Admin Control Panel</h2>
+        <p class="text-muted fs-5">Manage registered users, catalog categories, subcategories, products, and transaction records from this workspace.</p>
     </div>
 </div>
 {% endblock %}
 
-
-{% block nav %}
-    <nav>
-        <ul id="MenuItems">
-            <li><b><a href="/myadmin/"> ADMIN HOME</a></b></li>
-            <li><b><a href="/myadmin/manageusers/">MANAGE USERS</a></b></li>
-            <li><b><a href="/myadmin/products/">PRODUCTS</a></b></li>
-            <li><b><a href="/myadmin/addcategory/">ADD CATEGORY</a></b></li>
-            <li><b><a href="/myadmin/addsubcategory/">ADD SUBCATEGORY</a></b></li>
-            <li><b><a href="/myadmin/viewuserfunds/">VIEW FUNDS</a></b></li>
-            <li><b><a href="/myadmin/epadmin/">EDIT PROFILE</a></b></li>
-            <li><b><a href="/login/">LOGOUT</a></b></li>
-            
-        </ul>
-    </nav>
-{% endblock %}
-
-    <!------------end navbar----------------------->
-
-{% block Quote %}
-{% endblock %}
-
-{% block button %}
-{% endblock %}
-
-
-{% block featured %}
-{% endblock %}
-
-{% block Featured_products %}
-{% endblock %}
-
-{% block Latest %}
-{% endblock %}
-
-{% block testimonial %}
-{% endblock %}
-
-{% block brands %}
-{% endblock %}
-
-{% block offer %}
-{% endblock %}
-
-{% block footer %}
-
- <!-------------------------------------- footer start ---------------------------------------------->
-        
- <div class="footer">
-     <div>
-</div>
-         <hr>
-     </br>
-     <div>
-         <p class="copyright">&#169;2022-2023  All Rights Reserved By - RedStore -</p>
-     </div>
-     </div>
- </div>
-</div>
- <!--------------------footer end-------------------------------------->
-
-{% endblock %}
+{% block Quote %}{% endblock %}
+{% block featured %}{% endblock %}
+{% block offer %}{% endblock %}

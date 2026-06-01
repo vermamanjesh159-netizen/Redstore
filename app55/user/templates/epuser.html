@@ -1,70 +1,66 @@
 {% extends 'userhome.html' %}
 {% load static %}
+
 {% block content %}
-<center>
-<br>
-<br>    
-<h1> Edit Profile Here!!!</h1>
-<p style="color: blue;"><b>{{output}}</b></p>
-<head>  
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link rel="stylesheet" href="{% static 'css/style.css'%}">
-</head>
-
-<!-----------form start------------------->
-<div class="container d-flex align-items-centre justify-content-center">
-<form method="POST" action="/user/epuser/">
-{% csrf_token %}  
- 
-  <div class="form-group" >
-    <label for="name"><b>Name:</b></label>
-    <input type="name" class="form-control" name="name" placeholder="Enter name" value="{{userDetails.name}}">
-  </div>
-    <div class="form-group">
-      <label for="exampleInputEmail1"><b>Email Address:</b></label>
-      <input type="email" class="form-control" name="email" aria-describedby="emailHelp" placeholder="Enter email" value="{{userDetails.email}}" readonly>
-      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-    </div>
-    <div class="form-group">
-      <label for="mobile"><b>Mobile:</b></label>
-      <input type="mobile" class="form-control" name="mobile" value="{{userDetails.mobile}}">
-    </div>
-    <div class="form-group">
-      <label for="exampleInputPassword1"><b>Address:</b></label>
-      <textarea class="form-control" name="address" rows="5">{{userDetails.address}}</textarea>
-    </div>
-    <div class="form-group">
-      <label for="gender"><b>Gender:</b></label>
-      Male <input type="radio" name="gender" value="Male" {{m}} >
-      &nbsp;&nbsp;
-      Female <input type="radio" name="gender" value="Female" {{f}} >
-      
-    </div>
+<div class="form-card" style="max-width: 600px; margin-top: 0;">
+    <h2 class="form-title"><i class="fa-solid fa-user-pen text-danger me-2"></i> Edit Profile</h2>
     
-    <div class="form-group">
-      <label for="city"><b>City:</b></label>
-      <select class="form-control" name="city">
-        <option>{{userDetails.city}}</option>
-        <option>Indore</option>
-        <option>Bhopal</option>
-        <option>Ujjain</option>
+    {% if output %}
+    <div class="alert-premium alert-premium-success">
+        <i class="fa-solid fa-circle-check"></i>
+        <span>{{output}}</span>
+    </div>
+    {% endif %}
+
+    <form method="POST" action="/user/epuser/">
+        {% csrf_token %}  
         
-
-      </select>
-    </div>
-    
-    <div class="form-check">
-      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-      <label class="form-check-label" for="exampleCheck1">Check me out</label>
-    </div>
-    <button type="submit" class="btn btn-success">Update</button>
-  </form>
+        <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" class="form-control-premium" name="name" id="name" placeholder="Enter name" value="{{userDetails.name}}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="email">Email Address (Read-only)</label>
+            <input type="email" class="form-control-premium" name="email" id="email" value="{{userDetails.email}}" readonly>
+            <small class="form-text text-muted mt-1 d-block">Your email address cannot be changed.</small>
+        </div>
+        
+        <div class="form-group">
+            <label for="mobile">Mobile Number</label>
+            <input type="tel" class="form-control-premium" name="mobile" id="mobile" value="{{userDetails.mobile}}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="address">Address</label>
+            <textarea class="form-control-premium" name="address" id="address" rows="3" required>{{userDetails.address}}</textarea>
+        </div>
+        
+        <div class="form-group">
+            <label>Gender</label>
+            <div class="radio-group">
+                <label class="radio-item">
+                    <input type="radio" name="gender" value="Male" {{m}}>
+                    <span>Male</span>
+                </label>
+                <label class="radio-item">
+                    <input type="radio" name="gender" value="Female" {{f}}>
+                    <span>Female</span>
+                </label>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="city">City</label>
+            <select class="form-control-premium" name="city" id="city" required>
+                <option value="{{userDetails.city}}">{{userDetails.city}} (Current)</option>
+                <option value="Indore">Indore</option>
+                <option value="Bhopal">Bhopal</option>
+                <option value="Ujjain">Ujjain</option>
+            </select>
+        </div>
+        
+        <button type="submit" class="btn-premium w-100 py-3 mt-3">Update Profile</button>
+    </form>
 </div>  
-<!---------form end------------------>
-
-</body>
-</html>
-
-<br>
-<br>
 {% endblock %}
