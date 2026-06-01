@@ -1,0 +1,30 @@
+{% extends 'master_template.html' %}
+{% load static %}
+
+{% block trackingid %}
+<div class="top-bar-item">
+    <i class="fa-solid fa-circle-user"></i>
+    <span>Guest</span>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6 mb-4 mb-md-0">
+                <h1 class="display-5 fw-bold mb-4">About RedStore</h1>
+                <p class="lead text-muted mb-4">We believe everyone deserves to have a professional website and a world-class online store to showcase their lifestyle and goals.</p>
+                <p class="text-muted">Our platform is designed to provide high-quality fitness gear, clothing, and lifestyle products, bringing consistency and greatness to your daily routine.</p>
+            </div>
+            <div class="col-md-6 text-center">
+                <img src="/static/images/about33.jpg" class="img-fluid rounded-4 shadow-premium" alt="About RedStore" style="max-height: 380px; width: 100%; object-fit: cover;">
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block Quote %}{% endblock %}
+{% block featured %}{% endblock %}
+{% block offer %}{% endblock %}

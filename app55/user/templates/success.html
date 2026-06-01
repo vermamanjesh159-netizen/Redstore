@@ -1,0 +1,13 @@
+{% extends 'userhome.html' %}
+{% load static %}
+
+{% block content %}
+<div class="card border-0 shadow-premium rounded-4 p-5 text-center bg-white" style="max-width: 550px; margin: 40px auto;">
+    <div class="py-4">
+        <div class="display-1 text-success mb-4"><i class="fa-solid fa-circle-check"></i></div>
+        <h2 class="fw-bold mb-3 text-success">Transaction Successful</h2>
+        <p class="text-muted fs-5 mb-4">Thank you for your generous charity contribution! Your donation helps make sport and physical activities accessible to many.</p>
+        <a href="/user/viewfunds/" class="btn-premium"><i class="fa-solid fa-receipt"></i> View Your History</a>
+    </div>
+</div>
+{% endblock %}

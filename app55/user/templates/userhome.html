@@ -1,0 +1,97 @@
+{% extends 'master_template.html' %}
+
+{% block trackingid %}
+<div class="top-bar-item">
+    <i class="fa-solid fa-circle-user text-danger"></i>
+    <span>User: <strong>{{sunm}}</strong></span>
+</div>
+{% endblock %}
+
+{% block nav %}
+<ul class="nav-menu" id="MenuItems">
+    <li><a class="nav-link active" href="/user/">User Panel</a></li>
+    <li><a class="nav-link" href="/user/cart/"><i class="fa-solid fa-cart-shopping me-1"></i> Cart <span class="badge bg-danger text-white rounded-circle ms-1" style="font-size: 0.75rem; padding: 2px 6px;">{{ request.session.cart|length }}</span></a></li>
+    <li><a class="nav-link" href="/">View Site</a></li>
+    <li><a class="nav-link text-danger fw-bold" href="/login/"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+</ul>
+{% endblock %}
+
+{% block sidebar %}
+<aside class="sidebar">
+    <div class="sidebar-header">
+        <span class="sidebar-title">User Options</span>
+    </div>
+    <ul class="sidebar-menu">
+        <li class="sidebar-item"><a href="/user/"><i class="fa-solid fa-house-user"></i> Dashboard</a></li>
+        <li class="sidebar-item"><a href="/user/cart/"><i class="fa-solid fa-cart-shopping"></i> Shopping Cart <span class="badge bg-danger text-white rounded-circle ms-1" style="font-size: 0.75rem; padding: 2px 6px;">{{ request.session.cart|length }}</span></a></li>
+        <li class="sidebar-item"><a href="/user/funds/"><i class="fa-solid fa-hand-holding-dollar"></i> Donate Funds</a></li>
+        <li class="sidebar-item"><a href="/user/viewfunds/"><i class="fa-solid fa-receipt"></i> Transaction History</a></li>
+        <li class="sidebar-item"><a href="/user/cpuser/"><i class="fa-solid fa-key"></i> Change Password</a></li>
+        <li class="sidebar-item"><a href="/user/epuser/"><i class="fa-solid fa-user-pen"></i> Edit Profile</a></li>
+    </ul>
+</aside>
+{% endblock %}
+
+{% block content %}
+<div class="card border-0 shadow-premium rounded-4 p-5 text-center bg-white mb-5">
+    <div class="py-3">
+        <div class="display-5 text-danger mb-3"><i class="fa-solid fa-heart-pulse"></i></div>
+        <h2 class="fw-bold mb-3">Welcome to RedStore Member Space</h2>
+        <p class="text-muted fs-5 m-0">Explore our premium catalog below, manage your cart, and make secure checkouts.</p>
+    </div>
+</div>
+
+<div class="mb-4">
+    <h3 class="fw-bold"><i class="fa-solid fa-tags text-danger me-2"></i> Our Featured Products</h3>
+    <p class="text-muted">Browse our wide selection of sports gear and clothing.</p>
+</div>
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    {% for p in plist %}
+    <div class="col">
+        <div class="card border-0 shadow-premium rounded-4 overflow-hidden bg-white h-100 d-flex flex-column">
+            <div class="card-header bg-light border-0 py-3 px-4 d-flex justify-content-between align-items-center">
+                <span class="badge bg-danger-subtle text-danger border border-danger-subtle px-3 py-2 fw-semibold">Stock: {{p.quantity}}</span>
+                <strong class="text-danger" style="font-size: 1.15rem;">${{ p.price|floatformat:2 }}</strong>
+            </div>
+            
+            <!-- Product Image -->
+            <div style="height: 200px; overflow: hidden; background: #f8f9fa; border-bottom: 1px solid #eee;" class="position-relative">
+                {% if p.prodimage %}
+                    {% if "product-" in p.prodimage or "buy-" in p.prodimage or "category-" in p.prodimage %}
+                        <img src="/static/images/{{p.prodimage}}" alt="{{p.title}}" style="height: 100%; width: 100%; object-fit: cover; transition: transform 0.3s ease;">
+                    {% else %}
+                        <img src="{{media_url}}{{p.prodimage}}" alt="{{p.title}}" style="height: 100%; width: 100%; object-fit: cover; transition: transform 0.3s ease;">
+                    {% endif %}
+                {% else %}
+                    <img src="/static/images/product-1.jpg" alt="Default Product" style="height: 100%; width: 100%; object-fit: cover; transition: transform 0.3s ease;">
+                {% endif %}
+            </div>
+
+            <div class="card-body p-4 d-flex flex-column justify-content-between flex-grow-1">
+                <div>
+                    <h4 class="fw-bold mb-2">{{p.title}}</h4>
+                    <p class="text-secondary mb-4" style="font-size: 0.9rem;">{{p.description}}</p>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+                    <span class="text-muted" style="font-size: 0.8rem;"><i class="fa-regular fa-calendar me-1"></i> Launched: {{p.ldate}}</span>
+                    <a href="/user/add_to_cart/{{p.prodid}}/" class="btn-premium py-2 px-3" style="font-size: 0.85rem; border-radius: var(--radius-md); text-decoration: none;">
+                        <i class="fa-solid fa-cart-plus me-1"></i> Add to Cart
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12 text-center py-5 bg-white rounded-4 border">
+        <div class="display-4 text-muted mb-3"><i class="fa-solid fa-tags"></i></div>
+        <h4 class="text-secondary">No Products Available</h4>
+        <p class="text-muted">Please check back later.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block Quote %}{% endblock %}
+{% block featured %}{% endblock %}
+{% block offer %}{% endblock %}

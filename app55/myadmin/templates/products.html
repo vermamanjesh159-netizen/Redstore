@@ -1,0 +1,60 @@
+{% extends 'adminhome.html' %}
+{% load static %}
+
+{% block content %}
+<div class="form-card" style="max-width: 600px; margin-top: 0;">
+    <h2 class="form-title"><i class="fa-solid fa-plus-circle text-danger me-2"></i> Add Product</h2>
+    
+    {% if output %}
+    <div class="alert-premium alert-premium-success">
+        <i class="fa-solid fa-circle-check"></i>
+        <span>{{output}}</span>
+    </div>
+    {% endif %}
+
+    <form method="POST" action="/myadmin/products/" enctype="multipart/form-data">
+        {% csrf_token %}  
+        
+        <div class="form-group">
+            <label for="title">Product Title</label>
+            <input type="text" class="form-control-premium" name="title" id="title" placeholder="e.g., Performance Sports Shoes" required> 
+        </div>
+        
+        <div class="form-group">
+            <label for="prodimage">Product Image</label>
+            <input type="file" class="form-control-premium" name="prodimage" id="prodimage" required> 
+        </div>
+        
+        <div class="form-group">
+            <label for="description">Product Description</label>
+            <textarea class="form-control-premium" name="description" id="description" rows="4" placeholder="Detail the features, specifications, and components of the product..." required></textarea> 
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <label for="price">Price ($)</label>
+                <input type="number" step="0.01" class="form-control-premium" name="price" id="price" placeholder="e.g. 19.99" required>
+            </div>
+            
+            <div class="col-md-6 form-group">
+                <label for="quantity">Quantity</label>
+                <input type="number" class="form-control-premium" name="quantity" id="quantity" placeholder="e.g. 100" required>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <label for="ldate">Launch Date</label>
+                <input type="date" class="form-control-premium" name="ldate" id="ldate" required> 
+            </div>
+            
+            <div class="col-md-6 form-group">
+                <label for="edate">End Date</label>
+                <input type="date" class="form-control-premium" name="edate" id="edate" required> 
+            </div>
+        </div>
+        
+        <button type="submit" class="btn-premium w-100 py-3 mt-3">Add Product</button>
+    </form>
+</div>
+{% endblock %}

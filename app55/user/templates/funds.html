@@ -1,0 +1,44 @@
+{% extends 'userhome.html' %}
+{% load static %}
+
+{% block content %}
+<div class="form-card" style="max-width: 500px; margin-top: 0;">
+    <div class="text-center mb-4">
+        <div class="display-3 text-success mb-3"><i class="fa-solid fa-hand-holding-heart"></i></div>
+        <h2 class="fw-bold">Support Our Charity</h2>
+        <p class="text-muted">Your contributions help us sustain the pleasure and benefits of sports for communities in need.</p>
+    </div>
+    
+    <div class="bg-light rounded-4 p-4 text-center mb-4 border">
+        <span class="text-muted d-block text-uppercase mb-1" style="font-size: 0.8rem; letter-spacing: 1px;">Contribution Amount</span>
+        <span class="display-4 fw-bold text-dark">$ {{amt}}</span>
+        <span class="text-muted d-block mt-1">USD (approx. &#8377;100 equivalent)</span>
+    </div>
+
+    <form action="{{paypalURL}}" method="post">
+        <!-- Identify business account -->
+        <input type="hidden" name="business" value="{{paypalID}}">
+        
+        <!-- Buy Now command -->
+        <input type="hidden" name="cmd" value="_xclick">
+        
+        <!-- Item description -->
+        <input type="hidden" name="item_name" value="charity_funds">
+        <input type="hidden" name="amount" value="{{amt}}">
+        <input type="hidden" name="currency_code" value="USD">
+        
+        <!-- Return URLs -->
+        <input type="hidden" name="cancel_return" value="http://localhost:8000/user/cancel/">
+        <input type="hidden" name="return" value="http://localhost:8000/user/payment/?uid={{sunm}}&amt={{amt}}">
+        
+        <!-- Donation Trigger Button -->
+        <button type="submit" class="btn-premium w-100 py-3 d-flex align-items-center justify-content-center gap-2">
+            <i class="fa-brands fa-paypal"></i> Proceed to Donate with PayPal
+        </button>
+        
+        <div class="text-center mt-3">
+            <small class="text-muted"><i class="fa-solid fa-lock me-1"></i> Payments are securely processed via PayPal sandbox.</small>
+        </div>
+    </form>
+</div>
+{% endblock %}

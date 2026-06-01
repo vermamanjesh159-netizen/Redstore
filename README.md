@@ -6,7 +6,7 @@ This project is basically on Django CURD operations.
 
 It is e-commerece application used to manage process of product launching, adding, managing and show the information globally to the users, so that this process globally implemented and follow the rules of SDLC.
 
-Technology- Python, HTML, CSS-Bootstrap, Django Framework, Mysql-Xamp.
+Technology- Python, HTML, CSS, Django Framework, PostgreSQL, SQLAlchemy.
 
 Multiple apps- myadmin, users
 
