@@ -20,6 +20,9 @@ class Migration(migrations.Migration):
                 ('ldate', models.CharField(max_length=10)),
                 ('edate', models.CharField(max_length=10)),
                 ('info', models.CharField(max_length=50)),
+                ('prodimage', models.CharField(default='', max_length=100)),
+                ('price', models.FloatField(default=0.0)),
+                ('quantity', models.IntegerField(default=0)),
             ],
         ),
     ]

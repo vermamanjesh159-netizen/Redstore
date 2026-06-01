@@ -4,6 +4,7 @@ from django.conf import settings
 from myadmin import models as myadmin_models
 from app5 import models as app5_models
 from app5.database import get_db_session
+from app5.data_manager import get_all_products, get_product_by_id
 from . import models
 import time
 import os
@@ -27,9 +28,7 @@ def sessioncheckuser_middleware(get_response):
 
 
 def userhome(request):
-    session = get_db_session()
-    plist = session.query(myadmin_models.products).all()
-    session.close()
+    plist = get_all_products()
     return render(request, "userhome.html", {"sunm": request.session["sunm"], "plist": plist, "media_url": media_url})
 
 
@@ -106,11 +105,9 @@ def view_cart(request):
     cart_items = []
     total = 0
     
-    session_db = get_db_session()
-    
     for prodid_str, qty in cart.items():
         prodid = int(prodid_str)
-        p = session_db.query(myadmin_models.products).filter(myadmin_models.products.prodid == prodid).first()
+        p = get_product_by_id(prodid)
         if p:
             price = p.price
             item_total = price * qty
@@ -121,8 +118,6 @@ def view_cart(request):
                 'quantity': qty,
                 'total': item_total
             })
-            
-    session_db.close()
     
     return render(request, "cart.html", {
         "sunm": request.session["sunm"],
@@ -137,13 +132,12 @@ def create_checkout_session(request):
     if not cart:
         return redirect('/user/cart/')
         
-    session_db = get_db_session()
     line_items = []
     total_amount = 0
     
     for prodid_str, qty in cart.items():
         prodid = int(prodid_str)
-        p = session_db.query(myadmin_models.products).filter(myadmin_models.products.prodid == prodid).first()
+        p = get_product_by_id(prodid)
         if p:
             price = p.price
             total_amount += price * qty
@@ -159,8 +153,6 @@ def create_checkout_session(request):
                 },
                 'quantity': qty,
             })
-            
-    session_db.close()
     
     if not line_items:
         return redirect('/user/cart/')
