@@ -7,6 +7,7 @@ from app5.database import get_db_session
 from . import models
 import time
 import os
+import stripe
 stripe.api_key = os.environ.get('STRIPE_SECRET_KEY', '')
 media_url = settings.MEDIA_URL
 
